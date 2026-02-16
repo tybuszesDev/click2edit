@@ -1,6 +1,8 @@
 import { list, put } from "@vercel/blob";
 
 const PATHNAME = "click2edit/editable-content.json";
+const resolveBlobToken = () =>
+  process.env.BLOB_READ_WRITE_TOKEN || process.env.click2edit_READ_WRITE_TOKEN || "";
 
 const withCors = (res: any) => {
   res.setHeader("access-control-allow-origin", "*");
@@ -15,7 +17,9 @@ const parseObject = (value: unknown): Record<string, unknown> => {
 };
 
 const getBlobJson = async (): Promise<Record<string, unknown>> => {
-  const { blobs } = await list({ prefix: PATHNAME, limit: 1 });
+  const token = resolveBlobToken();
+  if (!token) return {};
+  const { blobs } = await list({ prefix: PATHNAME, limit: 1, token });
   const blob = blobs.find((item) => item.pathname === PATHNAME) ?? blobs[0];
   if (!blob) return {};
   const response = await fetch(blob.url, { cache: "no-store" });
@@ -43,6 +47,12 @@ export default async function handler(req: any, res: any) {
     return;
   }
 
+  const blobToken = resolveBlobToken();
+  if (!blobToken) {
+    res.status(500).end(JSON.stringify({ error: "Missing Blob token env variable" }));
+    return;
+  }
+
   const password = process.env.EDITABLE_PASSWORD || "";
   if (password && req.headers["x-editable-password"] !== password) {
     res.status(401).end(JSON.stringify({ error: "Unauthorized" }));
@@ -58,6 +68,7 @@ export default async function handler(req: any, res: any) {
   if (req.method === "PUT") {
     const next = getRequestBody(req);
     await put(PATHNAME, JSON.stringify(next), {
+      token: blobToken,
       access: "public",
       addRandomSuffix: false,
       contentType: "application/json",
