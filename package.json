@@ -1,0 +1,51 @@
+{
+  "name": "click2edit",
+  "version": "0.2.0",
+  "description": "Tiny inline editing for small React websites",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./server": {
+      "types": "./server/index.d.ts",
+      "import": "./server/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "server",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "demo": "vite demo --config demo/vite.config.ts",
+    "demo:build": "vite build demo --config demo/vite.config.ts",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "react",
+    "inline-edit",
+    "localstorage",
+    "cms-light"
+  ],
+  "author": "Lukasz Tybuszewski",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": ">=18"
+  },
+  "devDependencies": {
+    "@vercel/blob": "^1.1.1",
+    "@types/react-dom": "^19.0.0",
+    "@types/react": "^19.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "typescript": "^5.8.0",
+    "vite": "^6.3.5"
+  }
+}
