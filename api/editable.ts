@@ -76,6 +76,7 @@ export default async function handler(req: any, res: any) {
         token: blobToken,
         access: "public",
         addRandomSuffix: false,
+        allowOverwrite: true,
         contentType: "application/json",
         cacheControlMaxAge: 0,
       });
