@@ -1,18 +1,22 @@
 import React from "react";
 import {
-  Editable,
-  EditableList,
-  EditableProvider,
   editable,
   httpAdapter,
   localStorageAdapter,
+  vercelPasswordAuth,
   type EditableContent,
   type StorageAdapter,
 } from "../../src/index";
+import {
+  Editable,
+  EditableList,
+  EditableProvider,
+  useEditableMode,
+} from "../../src/react";
 
-const demoPassword = "demo123";
 const localAdapter = localStorageAdapter("__editable_demo_content__");
-const remoteAdapter = httpAdapter({ url: "/api/editable", password: demoPassword });
+const remoteAdapter = httpAdapter({ url: "/api/editable" });
+const authorizeRemote = vercelPasswordAuth({ endpoint: "/api/editable" });
 
 const hybridAdapter: StorageAdapter = {
   async load() {
@@ -35,7 +39,14 @@ const hybridAdapter: StorageAdapter = {
 };
 
 editable.init({
-  password: demoPassword,
+  authorize: async (password) => {
+    try {
+      return await authorizeRemote(password);
+    } catch {
+      // Keep local edit workflow in pure Vite mode without API.
+      return window.location.hostname === "localhost";
+    }
+  },
   storageAdapter: hybridAdapter,
 });
 
@@ -50,6 +61,23 @@ const reset = () => {
 export function App() {
   return (
     <EditableProvider>
+      <DemoContent />
+    </EditableProvider>
+  );
+}
+
+function DemoContent() {
+  const { editor, editing } = useEditableMode();
+
+  return (
+    <>
+      <div className="status-row">
+        <div className="status-chip">{editing ? "Edit mode: ON" : "Edit mode: OFF"}</div>
+        <div className="status-chip subtle">Storage: API + local fallback</div>
+        <button className="button button-secondary" onClick={() => editor.toggleEdit()}>
+          Toggle edit mode
+        </button>
+      </div>
       <main className="page">
         <header className="hero">
           <div className="badge">Click2edit Demo</div>
@@ -83,7 +111,7 @@ export function App() {
             <h3>How to edit</h3>
             <ol>
               <li>Press Cmd/Ctrl + Shift + E</li>
-              <li>Type password: <code>{demoPassword}</code></li>
+              <li>Type your server password (stored only in backend env)</li>
               <li>Click any highlighted text to edit</li>
               <li>Blur to save, ESC to cancel</li>
             </ol>
@@ -93,6 +121,6 @@ export function App() {
           </article>
         </section>
       </main>
-    </EditableProvider>
+    </>
   );
 }

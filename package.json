@@ -1,7 +1,7 @@
 {
   "name": "click2edit",
   "version": "0.2.0",
-  "description": "Tiny inline editing for small React websites",
+  "description": "Tiny inline editing for any JS stack (vanilla core + React adapter)",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -10,6 +10,10 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
+    },
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "import": "./dist/react.js"
     },
     "./server": {
       "types": "./server/index.d.ts",
@@ -37,7 +41,16 @@
   "author": "Lukasz Tybuszewski",
   "license": "MIT",
   "peerDependencies": {
-    "react": ">=18"
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@vercel/blob": "^1.1.1",

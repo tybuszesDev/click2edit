@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>click2edit vanilla demo</title>
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body>
+    <div class="status-row">
+      <div id="mode-chip" class="status-chip">Edit mode: OFF</div>
+      <div class="status-chip subtle">Storage: API + local fallback</div>
+      <button id="toggle-edit" class="button button-secondary">Toggle edit mode</button>
+    </div>
+    <main class="page">
+      <header class="hero">
+        <div class="badge">Click2edit Demo</div>
+        <h1 class="hero-title" data-editable="hero.title" data-editable-default="Modern websites that you can edit in seconds">
+          Modern websites that you can edit in seconds
+        </h1>
+        <p
+          class="hero-copy"
+          data-editable="hero.description"
+          data-editable-default="No CMS panel. No extra dashboard. Just click content, edit, and save instantly."
+          data-editable-multiline="true"
+        >
+          No CMS panel. No extra dashboard. Just click content, edit, and save instantly.
+        </p>
+        <div class="hero-actions">
+          <button class="button button-primary">Get started</button>
+          <button class="button button-secondary">Book a call</button>
+        </div>
+      </header>
+
+      <section class="grid">
+        <article class="card card-price">
+          <h2>Starter package</h2>
+          <p class="muted">Perfect for local business landing pages</p>
+          <p class="price">
+            <span>from</span>
+            <span data-editable="pricing.basic" data-editable-default="199 zl">199 zl</span>
+          </p>
+          <ul data-editable-list="pricing.features" data-editable-default="SEO on-page|Hosting setup|1 runda poprawek">
+            <li>SEO on-page</li>
+            <li>Hosting setup</li>
+            <li>1 runda poprawek</li>
+          </ul>
+        </article>
+
+        <article class="card card-panel">
+          <h3>How to edit</h3>
+          <ol>
+            <li>Press Cmd/Ctrl + Shift + E</li>
+            <li>Type your server password (stored only in backend env)</li>
+            <li>Click any highlighted text to edit</li>
+            <li>Blur to save, ESC to cancel</li>
+          </ol>
+          <button id="reset-storage" class="button button-ghost">Reset local/session storage</button>
+        </article>
+      </section>
+    </main>
+    <script type="module" src="/src/vanilla.ts"></script>
+  </body>
+</html>

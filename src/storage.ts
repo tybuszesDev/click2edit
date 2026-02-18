@@ -51,3 +51,44 @@ export const httpAdapter = ({ url, password }: HttpAdapterOptions): StorageAdapt
     },
   };
 };
+
+type HttpPasswordAuthOptions = {
+  url: string;
+  passwordField?: string;
+};
+
+export const httpPasswordAuth = ({
+  url,
+  passwordField = "password",
+}: HttpPasswordAuthOptions) => async (password: string): Promise<boolean> => {
+  const res = await fetch(url, {
+    method: "POST",
+    credentials: "same-origin",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ [passwordField]: password }),
+  });
+  return res.ok;
+};
+
+type VercelAdapterOptions = {
+  password?: string;
+  endpoint?: string;
+};
+
+export const vercelAdapter = ({
+  password,
+  endpoint = "/api/editable",
+}: VercelAdapterOptions = {}): StorageAdapter =>
+  httpAdapter({
+    url: endpoint,
+    password,
+  });
+
+type VercelPasswordAuthOptions = { endpoint?: string };
+
+export const vercelPasswordAuth = ({
+  endpoint = "/api/editable",
+}: VercelPasswordAuthOptions = {}) =>
+  httpPasswordAuth({
+    url: endpoint,
+  });
