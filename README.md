@@ -1,5 +1,9 @@
 # click2edit
 
+[![npm version](https://img.shields.io/npm/v/click2edit.svg)](https://www.npmjs.com/package/click2edit)
+[![npm downloads](https://img.shields.io/npm/dm/click2edit.svg)](https://www.npmjs.com/package/click2edit)
+[![license](https://img.shields.io/npm/l/click2edit.svg)](./LICENSE)
+
 Lightweight inline content editing for small websites:
 - `click2edit` -> framework-agnostic vanilla core
 - `click2edit/react` -> optional React adapter
