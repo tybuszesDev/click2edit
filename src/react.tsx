@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
-import { editable, type EditableInstance } from "./core";
+import { editable, type EditableInstance } from "./core.js";
 
 type EditableProviderProps = { children: React.ReactNode; editor?: EditableInstance };
 type EditableContextValue = { editor: EditableInstance; editing: boolean };

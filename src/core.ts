@@ -1,4 +1,4 @@
-import { localStorageAdapter, type EditableContent, type StorageAdapter } from "./storage";
+import { localStorageAdapter, type EditableContent, type StorageAdapter } from "./storage.js";
 
 type InitOptions = {
   password?: string;
