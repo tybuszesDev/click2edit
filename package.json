@@ -1,6 +1,6 @@
 {
   "name": "click2edit",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Tiny inline editing for any JS stack (vanilla core + React adapter)",
   "type": "module",
   "main": "./dist/index.js",
